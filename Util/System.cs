@@ -52,14 +52,21 @@ namespace CtrlCV.Util
 
         public static void PasteFile(string filepath)
         {
-            filepath = Path.GetFullPath(filepath);
-            Clipboard.SetText(File.ReadAllText(filepath));
-            if (ExternalWindowPointer != IntPtr.Zero)
-                SetForegroundWindow(ExternalWindowPointer);
+            try
+            {
+                filepath = Path.GetFullPath(filepath);
+                Clipboard.SetText(File.ReadAllText(filepath));
+                if (ExternalWindowPointer != IntPtr.Zero)
+                    SetForegroundWindow(ExternalWindowPointer);
 
-            Thread.Sleep(50);
-            SendKeys.SendWait("^v");
-            ExternalWindowPointer = IntPtr.Zero;
+                Thread.Sleep(50);
+                SendKeys.SendWait("^v");
+                ExternalWindowPointer = IntPtr.Zero;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Erro: " + ex.Message);
+            }
         }
     }
 }

@@ -194,5 +194,13 @@ namespace CtrlCV
                 TextFormatFlags.GlyphOverhangPadding
             );
         }
+
+        private void tvItems_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+                PasteFileNode();
+            else if (e.KeyCode == Keys.Escape)
+                this.Close();
+        }
     }
 }

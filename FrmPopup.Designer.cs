@@ -51,6 +51,7 @@
             tvItems.TabIndex = 2;
             tvItems.DrawNode += tvItems_DrawNode;
             tvItems.DoubleClick += tvItems_DoubleClick;
+            tvItems.KeyUp += tvItems_KeyUp;
             // 
             // FrmPopup
             // 
