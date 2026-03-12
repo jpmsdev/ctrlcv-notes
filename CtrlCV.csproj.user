@@ -4,9 +4,6 @@
     <_LastSelectedProfileId>D:\Meus Projetos\CtrlCV\Properties\PublishProfiles\FolderProfile.pubxml</_LastSelectedProfileId>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Update="frmMain.cs">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Update="FrmPopup.cs">
       <SubType>Form</SubType>
     </Compile>
