@@ -1,4 +1,5 @@
 using CtrlCV.Util;
+using System.Diagnostics;
 
 namespace CtrlCV
 {
@@ -62,7 +63,11 @@ namespace CtrlCV
 
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            System.Diagnostics.Process.Start("https://github.com/jpmsdev/ctrlcv-notes");
+            Process.Start(new ProcessStartInfo
+            {
+                FileName = "https://github.com/jpmsdev/ctrlcv-notes/releases",
+                UseShellExecute = true
+            });
         }
     }
 }
