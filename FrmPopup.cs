@@ -55,7 +55,7 @@ namespace CtrlCV
                 var filename_we = Path.GetFileNameWithoutExtension(filename);
                 var is_root = (Path.GetFullPath(full_dir_name).TrimEnd('\\').Equals(Files.GetNoteFolder().TrimEnd('\\')));
 
-                if (!full_dir_name.Equals(last_dir) && !is_root)
+                if ((last_node == null || !last_node.Text.Equals(dir_name)) && !is_root)
                 {
                     last_node = new TreeNode(dir_name);
                     tvItems.Nodes.Add(last_node);
