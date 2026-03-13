@@ -71,10 +71,11 @@ namespace CtrlCV.Util
                 foreach (var f in all_notes)
                 {
                     string filename = Text.Normalize(Path.GetFileName(f)).ToLower();
+                    string pathname = Text.Normalize(Path.GetDirectoryName(f)).ToLower();
                     bool filtered = true;
                     foreach (string s in search_splitted)
                     {
-                        if (filename.IndexOf(s) == -1)
+                        if (filename.IndexOf(s) == -1 && pathname.IndexOf(s) == -1)
                         {
                             filtered = false;
                             break;

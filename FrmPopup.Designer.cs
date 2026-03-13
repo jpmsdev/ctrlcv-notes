@@ -38,6 +38,7 @@
             txtSearch.Name = "txtSearch";
             txtSearch.Size = new Size(614, 27);
             txtSearch.TabIndex = 1;
+            txtSearch.TextChanged += txtSearch_TextChanged;
             txtSearch.KeyUp += txtSearch_KeyUp;
             // 
             // tvItems

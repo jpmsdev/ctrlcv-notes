@@ -42,6 +42,7 @@ namespace CtrlCV
         private void UpdateNotesList()
         {
             notes = Files.SearchNotes(txtSearch.Text);
+            tvItems.BeginUpdate();
             tvItems.Nodes.Clear();
 
             TreeNode bookmark = new TreeNode("Favoritos");
@@ -76,6 +77,7 @@ namespace CtrlCV
             }
 
             tvItems.ExpandAll();
+            tvItems.EndUpdate();
             SelectUp();
         }
         private void txtSearch_KeyUp(object sender, KeyEventArgs e)
@@ -88,8 +90,6 @@ namespace CtrlCV
                 PasteFileNode();
             else if (e.KeyCode == Keys.Escape)
                 this.Close();
-            else
-                UpdateNotesList();
         }
         private void tvItems_DoubleClick(object sender, EventArgs e)
         {
@@ -201,6 +201,11 @@ namespace CtrlCV
                 PasteFileNode();
             else if (e.KeyCode == Keys.Escape)
                 this.Close();
+        }
+
+        private void txtSearch_TextChanged(object sender, EventArgs e)
+        {
+            UpdateNotesList();
         }
     }
 }
