@@ -181,6 +181,7 @@ namespace CtrlCV
                     if (!openwith)
                     {
                         CtrlCV.Util.System.PasteFile(filepath);
+                        return;
                     }
                 }
 
