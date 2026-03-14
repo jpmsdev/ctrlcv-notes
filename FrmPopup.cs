@@ -187,7 +187,7 @@ namespace CtrlCV
 
                 if (openwith)
                 {
-                    Process.Start("openwith.exe", $"\"{filepath}\"");
+                    Process.Start("rundll32.exe", $"shell32.dll,OpenAs_RunDLL {filepath}");
                 }
                 else
                 {
