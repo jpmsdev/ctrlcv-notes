@@ -38,7 +38,7 @@
             // 
             // btnOpenFolder
             // 
-            btnOpenFolder.Location = new Point(11, 167);
+            btnOpenFolder.Location = new Point(11, 190);
             btnOpenFolder.Name = "btnOpenFolder";
             btnOpenFolder.Size = new Size(213, 34);
             btnOpenFolder.TabIndex = 0;
@@ -49,15 +49,15 @@
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(11, 29);
+            label1.Location = new Point(11, 31);
             label1.Name = "label1";
-            label1.Size = new Size(422, 120);
+            label1.Size = new Size(422, 140);
             label1.TabIndex = 1;
             label1.Text = resources.GetString("label1.Text");
             // 
             // btnUpdateList
             // 
-            btnUpdateList.Location = new Point(224, 167);
+            btnUpdateList.Location = new Point(224, 190);
             btnUpdateList.Name = "btnUpdateList";
             btnUpdateList.Size = new Size(213, 34);
             btnUpdateList.TabIndex = 2;
@@ -90,7 +90,7 @@
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(448, 213);
+            ClientSize = new Size(448, 236);
             Controls.Add(linkLabel1);
             Controls.Add(label2);
             Controls.Add(btnUpdateList);

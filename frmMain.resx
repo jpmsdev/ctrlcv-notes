@@ -119,8 +119,9 @@
   </resheader>
   <data name="label1.Text" xml:space="preserve">
     <value>1: Aperte Ctrl+Shift+Espaço para abrir a busca;
-2: Duplo clique ou ENTER para colar as informações;
-3: Segurar o botão SHIFT seleciona o app para abrir o arquivo.
+2: Setas (↑ e ↓) para navegar;
+3: Duplo clique ou ENTER para colar as informações;
+4: Segurar o botão SHIFT seleciona o app para abrir o arquivo.
 
 Arquivos que não são de texto (exemplo: pdf, doc) não serão
 copiados e sim abertos nos respectivos programas.</value>
