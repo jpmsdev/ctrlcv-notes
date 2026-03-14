@@ -120,13 +120,15 @@
   <data name="label1.Text" xml:space="preserve">
     <value>1. Crie arquivos de texto na pasta informada
 2: Aperta Ctrl+Shift+Espaço para abrir a busca
-3: Clique no arquivo correspondente para colar as informações
+3: Duplo clique no arquivo correspondente para colar as
+    informações
+4: Ao segurar o botão SHIFT permite abrir o arquivo em outro
+    programa facilitando a edição
+5: Arquivos que não são de texto (exemplo: pdf, doc) não serão
+    copiados e sim abertos nos respectivos programas
 
 Botões:
 - Abrir pasta: Abre a pasta que ficam os arquivos de texto
 - Atualizar: Atualiza a lista de arquivos</value>
   </data>
-  <metadata name="$this.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
 </root>

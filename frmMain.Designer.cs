@@ -38,11 +38,11 @@
             // 
             // btnOpenFolder
             // 
-            btnOpenFolder.Location = new Point(11, 205);
+            btnOpenFolder.Location = new Point(11, 292);
             btnOpenFolder.Name = "btnOpenFolder";
             btnOpenFolder.Size = new Size(213, 36);
             btnOpenFolder.TabIndex = 0;
-            btnOpenFolder.Text = "Abrir pasta";
+            btnOpenFolder.Text = "Abrir pasta 'Notas'";
             btnOpenFolder.UseVisualStyleBackColor = true;
             btnOpenFolder.Click += btnOpenFolder_Click;
             // 
@@ -51,17 +51,17 @@
             label1.AutoSize = true;
             label1.Location = new Point(12, 42);
             label1.Name = "label1";
-            label1.Size = new Size(424, 140);
+            label1.Size = new Size(429, 240);
             label1.TabIndex = 1;
             label1.Text = resources.GetString("label1.Text");
             // 
             // btnUpdateList
             // 
-            btnUpdateList.Location = new Point(224, 205);
+            btnUpdateList.Location = new Point(224, 292);
             btnUpdateList.Name = "btnUpdateList";
             btnUpdateList.Size = new Size(213, 36);
             btnUpdateList.TabIndex = 2;
-            btnUpdateList.Text = "Atualizar";
+            btnUpdateList.Text = "Atualizar lista";
             btnUpdateList.UseVisualStyleBackColor = true;
             btnUpdateList.Click += btnUpdateList_Click;
             // 
@@ -90,7 +90,7 @@
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(448, 253);
+            ClientSize = new Size(448, 340);
             Controls.Add(linkLabel1);
             Controls.Add(label2);
             Controls.Add(btnUpdateList);
