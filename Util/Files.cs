@@ -14,10 +14,6 @@ namespace CtrlCV.Util
         public const string note_dir_name = "Notas";
         private static string note_folder = "";
         private static string[] all_notes;
-        public static string[] GetFiles(string folder)
-        {
-            return Directory.GetFiles(folder + "", "*.txt");
-        }
 
         public static string GetAppDir()
         {
@@ -98,7 +94,7 @@ namespace CtrlCV.Util
             if (string.IsNullOrEmpty(path)) path = GetNoteFolder();
 
             List<string> notes = new List<string>();
-            notes.AddRange(Directory.GetFiles(path, "*.txt"));
+            notes.AddRange(Directory.GetFiles(path, "*.*"));
             if (recursive)
             {
                 var _dir = Directory.GetDirectories(path);

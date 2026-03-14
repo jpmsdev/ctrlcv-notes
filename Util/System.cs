@@ -50,7 +50,7 @@ namespace CtrlCV.Util
             return ExternalWindowPointer;
         }
 
-        public static void PasteFile(string filepath)
+        public static void PasteFile(string filepath, int attempt = 1)
         {
             try
             {
@@ -66,6 +66,11 @@ namespace CtrlCV.Util
             catch (Exception ex)
             {
                 MessageBox.Show("Erro: " + ex.Message);
+                if (attempt <= 3)
+                {
+                    Thread.Sleep(200);
+                    PasteFile(filepath, ++attempt);
+                }
             }
         }
     }

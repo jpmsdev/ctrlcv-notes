@@ -39,6 +39,7 @@
             txtSearch.Size = new Size(614, 27);
             txtSearch.TabIndex = 1;
             txtSearch.TextChanged += txtSearch_TextChanged;
+            txtSearch.KeyDown += txtSearch_KeyDown;
             txtSearch.KeyUp += txtSearch_KeyUp;
             // 
             // tvItems
@@ -52,6 +53,7 @@
             tvItems.TabIndex = 2;
             tvItems.DrawNode += tvItems_DrawNode;
             tvItems.DoubleClick += tvItems_DoubleClick;
+            tvItems.KeyDown += tvItems_KeyDown;
             tvItems.KeyUp += tvItems_KeyUp;
             // 
             // FrmPopup

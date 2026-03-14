@@ -4,7 +4,9 @@ using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,7 +16,8 @@ namespace CtrlCV
 {
     public partial class FrmPopup : Form
     {
-        string[] notes;
+        private string[] notes;
+        private bool openwith = false;
 
         public FrmPopup()
         {
@@ -53,7 +56,8 @@ namespace CtrlCV
                 var full_dir_name = Path.GetDirectoryName(n);
                 var dir_name = Path.GetFileName(full_dir_name);
                 var filename = Path.GetFileName(n);
-                var filename_we = Path.GetFileNameWithoutExtension(filename);
+                var extension = Path.GetExtension(filename);
+                var filename_tn = (extension.Equals(".txt")) ? Path.GetFileNameWithoutExtension(filename) : filename;
                 var is_root = (Path.GetFullPath(full_dir_name).TrimEnd('\\').Equals(Files.GetNoteFolder().TrimEnd('\\')));
 
                 if ((last_node == null || !last_node.Text.Equals(dir_name)) && !is_root)
@@ -64,11 +68,11 @@ namespace CtrlCV
 
                 if (is_root)
                 {
-                    bookmark.Nodes.Add(new TreeNode(filename_we));
+                    bookmark.Nodes.Add(new TreeNode(filename_tn));
                 }
                 else
                 {
-                    last_node.Nodes.Add(new TreeNode(filename_we));
+                    last_node.Nodes.Add(new TreeNode(filename_tn));
                 }
             }
             if (bookmark.Nodes.Count > 0)
@@ -90,6 +94,11 @@ namespace CtrlCV
                 PasteFileNode();
             else if (e.KeyCode == Keys.Escape)
                 this.Close();
+
+            if (e.KeyCode == Keys.ShiftKey)
+            {
+                OpenWith(false);
+            }
         }
         private void tvItems_DoubleClick(object sender, EventArgs e)
         {
@@ -163,9 +172,31 @@ namespace CtrlCV
             if (n.Nodes.Count == 0)
             {
                 var full_nodepath = (n.FullPath.StartsWith("Favoritos\\") ? n.FullPath.Substring(10) : n.FullPath);
-                var filepath = Files.GetNoteFolder() + full_nodepath + ".txt";
+                var extension = Path.GetExtension(full_nodepath);
+                var filepath = Files.GetNoteFolder() + full_nodepath;
 
-                CtrlCV.Util.System.PasteFile(filepath);
+                if (string.IsNullOrEmpty(extension))
+                {
+                    filepath += ".txt";
+                    if (!openwith)
+                    {
+                        CtrlCV.Util.System.PasteFile(filepath);
+                    }
+                }
+
+                if (openwith)
+                {
+                    Process.Start("openwith.exe", $"\"{filepath}\"");
+                }
+                else
+                {
+                    Process.Start(new ProcessStartInfo
+                    {
+                        FileName = $@"{filepath}",
+                        UseShellExecute = true
+                    });
+                }
+
                 this.Hide();
                 this.Dispose();
             }
@@ -201,11 +232,46 @@ namespace CtrlCV
                 PasteFileNode();
             else if (e.KeyCode == Keys.Escape)
                 this.Close();
+
+            if (e.KeyCode == Keys.ShiftKey)
+            {
+                OpenWith(false);
+            }
         }
 
         private void txtSearch_TextChanged(object sender, EventArgs e)
         {
             UpdateNotesList();
+        }
+
+        private void tvItems_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.ShiftKey)
+            {
+                OpenWith(true);
+            }
+        }
+
+        private void txtSearch_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.ShiftKey)
+            {
+                OpenWith(true);
+            }
+        }
+
+        private void OpenWith(bool enable)
+        {
+            if (enable)
+            {
+                openwith = true;
+                this.Text = "Busca (Abrir com...)";
+            } else
+            {
+                openwith = false;
+                this.Text = "Busca";
+            }
+
         }
     }
 }
