@@ -38,9 +38,9 @@
             // 
             // btnOpenFolder
             // 
-            btnOpenFolder.Location = new Point(11, 301);
+            btnOpenFolder.Location = new Point(11, 167);
             btnOpenFolder.Name = "btnOpenFolder";
-            btnOpenFolder.Size = new Size(213, 36);
+            btnOpenFolder.Size = new Size(213, 34);
             btnOpenFolder.TabIndex = 0;
             btnOpenFolder.Text = "Abrir pasta 'Notas'";
             btnOpenFolder.UseVisualStyleBackColor = true;
@@ -49,17 +49,17 @@
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(12, 42);
+            label1.Location = new Point(11, 29);
             label1.Name = "label1";
-            label1.Size = new Size(429, 240);
+            label1.Size = new Size(422, 120);
             label1.TabIndex = 1;
             label1.Text = resources.GetString("label1.Text");
             // 
             // btnUpdateList
             // 
-            btnUpdateList.Location = new Point(224, 301);
+            btnUpdateList.Location = new Point(224, 167);
             btnUpdateList.Name = "btnUpdateList";
-            btnUpdateList.Size = new Size(213, 36);
+            btnUpdateList.Size = new Size(213, 34);
             btnUpdateList.TabIndex = 2;
             btnUpdateList.Text = "Atualizar lista";
             btnUpdateList.UseVisualStyleBackColor = true;
@@ -69,7 +69,7 @@
             // 
             label2.AutoSize = true;
             label2.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label2.Location = new Point(12, 20);
+            label2.Location = new Point(11, 7);
             label2.Name = "label2";
             label2.Size = new Size(82, 20);
             label2.TabIndex = 3;
@@ -90,7 +90,7 @@
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(448, 349);
+            ClientSize = new Size(448, 213);
             Controls.Add(linkLabel1);
             Controls.Add(label2);
             Controls.Add(btnUpdateList);
