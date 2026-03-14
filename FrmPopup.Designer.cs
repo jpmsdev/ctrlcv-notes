@@ -49,7 +49,7 @@
             tvItems.ItemHeight = 25;
             tvItems.Location = new Point(13, 45);
             tvItems.Name = "tvItems";
-            tvItems.Size = new Size(614, 449);
+            tvItems.Size = new Size(614, 586);
             tvItems.TabIndex = 2;
             tvItems.DrawNode += tvItems_DrawNode;
             tvItems.DoubleClick += tvItems_DoubleClick;
@@ -60,7 +60,7 @@
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(639, 506);
+            ClientSize = new Size(639, 643);
             Controls.Add(tvItems);
             Controls.Add(txtSearch);
             FormBorderStyle = FormBorderStyle.FixedDialog;

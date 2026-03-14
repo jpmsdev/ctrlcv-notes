@@ -38,7 +38,7 @@
             // 
             // btnOpenFolder
             // 
-            btnOpenFolder.Location = new Point(11, 292);
+            btnOpenFolder.Location = new Point(11, 301);
             btnOpenFolder.Name = "btnOpenFolder";
             btnOpenFolder.Size = new Size(213, 36);
             btnOpenFolder.TabIndex = 0;
@@ -57,7 +57,7 @@
             // 
             // btnUpdateList
             // 
-            btnUpdateList.Location = new Point(224, 292);
+            btnUpdateList.Location = new Point(224, 301);
             btnUpdateList.Name = "btnUpdateList";
             btnUpdateList.Size = new Size(213, 36);
             btnUpdateList.TabIndex = 2;
@@ -90,7 +90,7 @@
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(448, 340);
+            ClientSize = new Size(448, 349);
             Controls.Add(linkLabel1);
             Controls.Add(label2);
             Controls.Add(btnUpdateList);
