@@ -5,7 +5,6 @@ namespace CtrlCV
 {
     public partial class frmMain : Form
     {
-        string[] arquivosTxt;
         public frmMain()
         {
             InitializeComponent();

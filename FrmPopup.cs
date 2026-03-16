@@ -1,22 +1,11 @@
 ﻿using CtrlCV.Util;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Diagnostics;
-using System.Drawing;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace CtrlCV
 {
     public partial class FrmPopup : Form
     {
-        private string[] notes;
+        private string[] notes = {};
         private bool openwith = false;
 
         public FrmPopup()
@@ -50,7 +39,6 @@ namespace CtrlCV
 
             TreeNode bookmark = new TreeNode("Favoritos");
             TreeNode last_node = null;
-            string last_dir = "";
             foreach (string n in notes)
             {
                 var full_dir_name = Path.GetDirectoryName(n);
