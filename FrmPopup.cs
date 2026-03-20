@@ -68,7 +68,13 @@ namespace CtrlCV
                 tvItems.Nodes.Insert(0, bookmark);
             }
 
-            tvItems.ExpandAll();
+            if (bookmark.Nodes.Count > 0 && txtSearch.Text.Trim().Length == 0)
+            {
+                bookmark.Expand();
+            } else
+            {
+                tvItems.ExpandAll();
+            }
             tvItems.EndUpdate();
             SelectUp();
         }
