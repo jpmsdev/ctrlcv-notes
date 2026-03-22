@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using CtrlCV.Collections;
+using System.Diagnostics;
 
 namespace CtrlCV.Util
 {
@@ -7,7 +8,6 @@ namespace CtrlCV.Util
         public const string note_dir_bookmarks = "Favoritos";
         public const string note_dir_name = "Notas";
         private static string note_folder = "";
-        private static string[] all_notes;
 
         public static string GetAppDir()
         {
@@ -37,68 +37,31 @@ namespace CtrlCV.Util
             return Path.GetFullPath(note_folder);
         }
 
-        public static void OpenNotesFolder()
+        public static void LoadAllNotes()
         {
-            Process.Start("explorer.exe", GetNoteFolder());
+            LoadNoteFiles();
         }
-
-        public static string[] SearchNotes(string search = "", bool force_update = false)
+        private static void LoadNoteFiles(string path = "", bool recursive = true)
         {
-            string[] filtered_notes;
-            if (all_notes == null || all_notes.Length == 0 || force_update)
-            {
-                all_notes = GetNoteFiles();
-            }
-            if (search.Length == 0)
-            {
-                filtered_notes = all_notes;
-            }
-            else
-            {
-                List<string> filtered_notes_list = new List<string> { };
-                string[] search_splitted = Text.Normalize(search).ToLower().Split(' ');
+            var f = NoteCollection.Singleton;
+            if (recursive) f.Clear();
 
-                foreach (var f in all_notes)
-                {
-                    string filename = Text.Normalize(Path.GetFileName(f)).ToLower();
-                    string pathname = Text.Normalize(Path.GetDirectoryName(f)).ToLower();
-                    bool filtered = true;
-                    foreach (string s in search_splitted)
-                    {
-                        if (filename.IndexOf(s) == -1 && pathname.IndexOf(s) == -1)
-                        {
-                            filtered = false;
-                            break;
-                        }
-                    }
-                    if (filtered)
-                    {
-                        filtered_notes_list.Add(f);
-                    }
-                }
-
-                filtered_notes = filtered_notes_list.ToArray();
-            }
-
-            return filtered_notes;
-        }
-
-        private static string[] GetNoteFiles(string path = "", bool recursive = true)
-        {
             if (string.IsNullOrEmpty(path)) path = GetNoteFolder();
 
-            List<string> notes = new List<string>();
-            notes.AddRange(Directory.GetFiles(path, "*.*"));
+            var files = Directory.GetFiles(path, "*.*");
+            foreach (var file in files)
+            {
+                f.Add(new ValueObjects.Note(file, recursive));
+            }
+
             if (recursive)
             {
                 var _dir = Directory.GetDirectories(path);
                 foreach (var d in _dir)
                 {
-                    notes.AddRange(GetNoteFiles(d, false));
+                    LoadNoteFiles(d, false);
                 }
             }
-
-            return notes.ToArray<string>();
         }
     }
 }
