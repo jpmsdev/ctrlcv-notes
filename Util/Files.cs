@@ -41,20 +41,20 @@ namespace CtrlCV.Util
         {
             LoadNoteFiles();
         }
-        private static void LoadNoteFiles(string path = "", bool recursive = true)
+        private static void LoadNoteFiles(string path = "", bool isRoot = true)
         {
             var f = NoteCollection.Singleton;
-            if (recursive) f.Clear();
+            if (isRoot) f.Clear();
 
             if (string.IsNullOrEmpty(path)) path = GetNoteFolder();
 
             var files = Directory.GetFiles(path, "*.*");
             foreach (var file in files)
             {
-                f.Add(new ValueObjects.Note(file, recursive));
+                f.Add(new ValueObjects.Note(file, isRoot));
             }
 
-            if (recursive)
+            if (isRoot)
             {
                 var _dir = Directory.GetDirectories(path);
                 foreach (var d in _dir)

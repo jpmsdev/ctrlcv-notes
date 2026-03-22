@@ -29,8 +29,9 @@ namespace CtrlCV.ValueObjects
             return Path.GetFileNameWithoutExtension(FullPath);
         }
 
-        public string GetDirectoryName()
+        public string GetDirectoryName(bool addBookmark = false)
         {
+            if (addBookmark && IsRootPath) return "Favoritos";
             string d = Path.GetFileName(Path.GetDirectoryName(FullPath));
             return this.IsRootPath ? "": d;
         }
@@ -39,9 +40,9 @@ namespace CtrlCV.ValueObjects
         {
             return Path.GetExtension(FullPath).ToLower();
         }
-        public string GetDirectoryAndFileNameWithoutExtension()
+        public string GetDirectoryAndFileNameWithoutExtension(bool addBookmark = false)
         {
-            return GetDirectoryName() + "\\" + GetFileName();
+            return GetDirectoryName(addBookmark) + "\\" + GetFileName();
         }
         public bool AllowPast()
         {

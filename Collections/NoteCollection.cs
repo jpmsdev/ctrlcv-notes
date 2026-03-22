@@ -33,7 +33,7 @@ namespace CtrlCV.Collections
             {
                 string[] search_splitted = search.Split(' ');
 
-                string filename = Text.Normalize(f.GetDirectoryAndFileNameWithoutExtension()).ToLower();
+                string filename = Text.Normalize(f.GetDirectoryAndFileNameWithoutExtension(true)).ToLower();
                 bool filtered = true;
                 foreach (string s in search_splitted)
                 {

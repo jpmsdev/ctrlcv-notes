@@ -61,9 +61,9 @@ namespace CtrlCV.Util
             catch (Exception ex)
             {
                 MessageBox.Show("Erro: " + ex.Message);
-                if (attempt <= 3)
+                if (attempt <= 10)
                 {
-                    Thread.Sleep(200);
+                    Thread.Sleep(50);
                     PasteFile(filepath, ++attempt);
                 }
             }
