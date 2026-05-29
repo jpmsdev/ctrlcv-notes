@@ -1,6 +1,6 @@
 # 📋 CtrlCVNotes
 
-O **CtrlCVNotes** é um utilitário leve e nativo para Windows projetado para colocar todas as suas notas de texto a um atalho de distância. 
+O **CtrlCVNotes** é um utilitário gratuito, leve e nativo para Windows projetado para colocar todas as suas notas de texto a um atalho de distância. 
 
 Esqueça o processo de abrir o bloco de notas ou navegar por pastas manualmente. Pressione `Ctrl + Shift + Espaço` em qualquer lugar do sistema, filtre a nota desejada e o conteúdo é colado automaticamente na janela onde você estava trabalhando — sem interromper o seu fluxo.
 
