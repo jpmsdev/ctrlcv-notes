@@ -12,6 +12,7 @@ namespace CtrlCV
         public FrmPopup()
         {
             InitializeComponent();
+            CtrlCV.Util.System.EnableDoubleBuffer(tvItems.Handle);
         }
         private void FrmPopup_Shown(object sender, EventArgs e)
         {

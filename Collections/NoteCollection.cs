@@ -28,12 +28,11 @@ namespace CtrlCV.Collections
                 return files.ToArray();
             }
 
+            string[] search_splitted = search.Split(' ');
             List<Note> filter = new List<Note>();
             foreach (var f in files)
             {
-                string[] search_splitted = search.Split(' ');
-
-                string filename = Text.Normalize(f.GetDirectoryAndFileNameWithoutExtension(true)).ToLower();
+                string filename = f.SearchKey;
                 bool filtered = true;
                 foreach (string s in search_splitted)
                 {

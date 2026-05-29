@@ -5,12 +5,7 @@ namespace CtrlCV.Util
 {
     public class Text
     {
-        public static string Normalize(string texto)
-        {
-            if (string.IsNullOrEmpty(texto))
-                return texto;
-
-            var map = new Dictionary<char, string>
+        private static readonly Dictionary<char, string> map = new Dictionary<char, string>
             {
                 // a
                 ['á'] = "a",
@@ -100,6 +95,11 @@ namespace CtrlCV.Util
                 ['ł'] = "l",
                 ['Ł'] = "L"
             };
+
+        public static string Normalize(string texto)
+        {
+            if (string.IsNullOrEmpty(texto))
+                return texto;
 
             var sb = new StringBuilder(texto.Length);
 

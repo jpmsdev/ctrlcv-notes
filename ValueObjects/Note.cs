@@ -7,6 +7,7 @@ namespace CtrlCV.ValueObjects
     class Note
     {
         private string[] extensions_past = { ".txt" };
+        private string? _searchKey;
         public string FullPath { get; }
         public bool IsRootPath { get; }
         public Note(string fullPath, bool isRootPath)
@@ -14,6 +15,9 @@ namespace CtrlCV.ValueObjects
             FullPath = fullPath;
             IsRootPath = isRootPath;
         }
+
+        public string SearchKey =>
+            _searchKey ??= Util.Text.Normalize(GetDirectoryAndFileNameWithoutExtension(true)).ToLower();
 
         public string GetFileNameTreeView()
         {

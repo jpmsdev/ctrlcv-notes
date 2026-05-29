@@ -9,13 +9,27 @@
 		<ImplicitUsings>enable</ImplicitUsings>
 		<ApplicationIcon>Properties\icon.ico</ApplicationIcon>
 		<Copyright>https://github.com/jpmsdev/</Copyright>
+
+		<!-- Publicação: 1 único .exe, self-contained, sem dependência de runtime/dll externa -->
+		<!-- win-x86 para máxima compatibilidade (roda em Windows 32-bit e 64-bit) -->
+		<RuntimeIdentifier>win-x86</RuntimeIdentifier>
 		<PublishSingleFile>true</PublishSingleFile>
 		<SelfContained>true</SelfContained>
 		<IncludeNativeLibrariesForSelfExtract>true</IncludeNativeLibrariesForSelfExtract>
-		<PublishTrimmed>false</PublishTrimmed>
-		<DebugType>none</DebugType>
 		<EnableCompressionInSingleFile>true</EnableCompressionInSingleFile>
+		<DebugType>none</DebugType>
+		<DebuggerSupport>false</DebuggerSupport>
+
+		<!-- Redução de tamanho: trimming + remoção de recursos/recursos de runtime não usados -->
+		<PublishTrimmed>true</PublishTrimmed>
+		<TrimMode>partial</TrimMode>
+		<_SuppressWinFormsTrimError>true</_SuppressWinFormsTrimError>
 		<InvariantGlobalization>true</InvariantGlobalization>
+		<EventSourceSupport>false</EventSourceSupport>
+		<HttpActivityPropagationSupport>false</HttpActivityPropagationSupport>
+		<MetadataUpdaterSupport>false</MetadataUpdaterSupport>
+		<UseSystemResourceKeys>true</UseSystemResourceKeys>
+		<AutoreleasePoolSupport>false</AutoreleasePoolSupport>
 	</PropertyGroup>
 
   <ItemGroup>
