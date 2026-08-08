@@ -250,9 +250,40 @@ LRESULT CALLBACK PopupProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
         break;
     case WM_NOTIFY: {
         const auto* hdr = reinterpret_cast<LPNMHDR>(lParam);
-        if (hdr->idFrom == IDC_TREE_ITEMS && hdr->code == NM_DBLCLK) {
+        if (hdr->idFrom != IDC_TREE_ITEMS) break;
+
+        if (hdr->code == NM_DBLCLK) {
             ActivateSelectedNote();
             return TRUE;
+        }
+
+        // Always paint selection in highlight blue (like WinForms HideSelection=false + owner-draw)
+        if (hdr->code == NM_CUSTOMDRAW) {
+            auto* cd = reinterpret_cast<LPNMTVCUSTOMDRAW>(lParam);
+            switch (cd->nmcd.dwDrawStage) {
+            case CDDS_PREPAINT:
+                return CDRF_NOTIFYITEMDRAW;
+            case CDDS_ITEMPREPAINT: {
+                const HTREEITEM item = reinterpret_cast<HTREEITEM>(cd->nmcd.dwItemSpec);
+                const bool selected =
+                    item == TreeView_GetSelection(hdr->hwndFrom) ||
+                    (cd->nmcd.uItemState & CDIS_SELECTED) != 0;
+                if (selected) {
+                    RECT rc{};
+                    if (TreeView_GetItemRect(hdr->hwndFrom, item, &rc, FALSE)) {
+                        FillRect(cd->nmcd.hdc, &rc, GetSysColorBrush(COLOR_HIGHLIGHT));
+                    }
+                    cd->clrText = GetSysColor(COLOR_HIGHLIGHTTEXT);
+                    cd->clrTextBk = GetSysColor(COLOR_HIGHLIGHT);
+                    // Avoid gray "inactive selection" overlay from the control
+                    cd->nmcd.uItemState &= ~(CDIS_SELECTED | CDIS_FOCUS);
+                    return CDRF_NEWFONT;
+                }
+                return CDRF_DODEFAULT;
+            }
+            default:
+                break;
+            }
         }
         break;
     }
