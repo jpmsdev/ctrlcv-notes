@@ -5,6 +5,8 @@ namespace CtrlCV
 {
     public partial class frmMain : Form
     {
+        private FrmPopup? frmPopup;
+
         public frmMain()
         {
             InitializeComponent();
@@ -16,9 +18,19 @@ namespace CtrlCV
 
         private void ShowPopup()
         {
+            if (frmPopup != null && !frmPopup.IsDisposed)
+            {
+                frmPopup.BringToFront();
+                frmPopup.Focus();
+                frmPopup.Activate();
+                CtrlCV.Util.System.SetForegroundWindow(frmPopup.Handle);
+                return;
+            }
+
             CtrlCV.Util.System.GetExternalWindow();
-            FrmPopup frmPopup = new FrmPopup();
+            frmPopup = new FrmPopup();
             frmPopup.TopMost = true;
+            frmPopup.FormClosed += (_, _) => frmPopup = null;
             frmPopup.Show();
             frmPopup.BringToFront();
             frmPopup.Focus();

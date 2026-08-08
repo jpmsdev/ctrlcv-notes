@@ -160,6 +160,12 @@ namespace CtrlCV
         private void PasteFileNode(bool show_message = false)
         {
             var node = tvItems.SelectedNode;
+            if (node == null)
+            {
+                if (show_message)
+                    MessageBox.Show("Selecione um item");
+                return;
+            }
             if (node.Nodes.Count == 0)
             {
                 if (node.Tag == null) return;
