@@ -1,4 +1,12 @@
 .vs/
 bin/
+!bin/.gitkeep
 obj/
 Release/
+*.obj
+*.res
+*.exe
+*.pdb
+*.ilk
+*.user
+_build_msvc.cmd
