@@ -475,6 +475,13 @@ bool RegisterClasses(HINSTANCE inst) {
 } // namespace
 
 int APIENTRY wWinMain(HINSTANCE inst, HINSTANCE, LPWSTR, int) {
+    // Single instance: second launch exits immediately
+    HANDLE singleInstance = CreateMutexW(nullptr, TRUE, L"Local\\CtrlCVNotes.SingleInstance");
+    if (singleInstance && GetLastError() == ERROR_ALREADY_EXISTS) {
+        if (singleInstance) CloseHandle(singleInstance);
+        return 0;
+    }
+
     g_inst = inst;
 
     INITCOMMONCONTROLSEX icc{ sizeof(icc), ICC_TREEVIEW_CLASSES | ICC_STANDARD_CLASSES };
@@ -504,5 +511,7 @@ int APIENTRY wWinMain(HINSTANCE inst, HINSTANCE, LPWSTR, int) {
         TranslateMessage(&msg);
         DispatchMessageW(&msg);
     }
+
+    if (singleInstance) CloseHandle(singleInstance);
     return static_cast<int>(msg.wParam);
 }
