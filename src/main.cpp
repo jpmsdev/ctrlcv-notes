@@ -3,6 +3,7 @@
 #include "util.hpp"
 
 #include <commctrl.h>
+#include <uxtheme.h>
 #include <windowsx.h>
 
 #include <string>
@@ -12,6 +13,7 @@
 #pragma comment(lib, "shell32.lib")
 #pragma comment(lib, "user32.lib")
 #pragma comment(lib, "gdi32.lib")
+#pragma comment(lib, "uxtheme.lib")
 
 namespace {
 
@@ -219,11 +221,13 @@ LRESULT CALLBACK PopupProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
         g_editSearch = CreateWindowExW(WS_EX_CLIENTEDGE, L"EDIT", L"",
             WS_CHILD | WS_VISIBLE | ES_AUTOHSCROLL,
             13, 12, 614, 27, hwnd, reinterpret_cast<HMENU>(IDC_EDIT_SEARCH), g_inst, nullptr);
+        SetWindowTheme(g_editSearch, L"Explorer", L"");
 
         g_treeItems = CreateWindowExW(WS_EX_CLIENTEDGE, WC_TREEVIEWW, L"",
             WS_CHILD | WS_VISIBLE | TVS_HASBUTTONS | TVS_HASLINES | TVS_LINESATROOT |
             TVS_SHOWSELALWAYS | TVS_FULLROWSELECT,
             13, 45, 614, 586, hwnd, reinterpret_cast<HMENU>(IDC_TREE_ITEMS), g_inst, nullptr);
+        SetWindowTheme(g_treeItems, L"Explorer", L"");
 
         HFONT font = reinterpret_cast<HFONT>(GetStockObject(DEFAULT_GUI_FONT));
         SendMessageW(g_editSearch, WM_SETFONT, reinterpret_cast<WPARAM>(font), TRUE);
@@ -399,17 +403,17 @@ LRESULT CALLBACK MainProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
             WS_CHILD | WS_VISIBLE | SS_LEFT,
             11, 31, 506, 150, hwnd, reinterpret_cast<HMENU>(IDC_LBL_HELP), g_inst, nullptr);
 
-        CreateWindowW(L"BUTTON", L"Abrir pasta 'Notas'",
-            WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON,
-            11, 190, 256, 34, hwnd, reinterpret_cast<HMENU>(IDC_BTN_OPEN), g_inst, nullptr);
+        HWND hBtnOpen = CreateWindowW(L"BUTTON", L"Abrir pasta 'Notas'",
+            WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON | BS_OWNERDRAW,
+            11, 195, 256, 36, hwnd, reinterpret_cast<HMENU>(IDC_BTN_OPEN), g_inst, nullptr);
 
-        CreateWindowW(L"BUTTON", L"Atualizar lista",
-            WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON,
-            269, 190, 256, 34, hwnd, reinterpret_cast<HMENU>(IDC_BTN_UPDATE), g_inst, nullptr);
+        HWND hBtnUpdate = CreateWindowW(L"BUTTON", L"Atualizar lista",
+            WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON | BS_OWNERDRAW,
+            269, 195, 256, 36, hwnd, reinterpret_cast<HMENU>(IDC_BTN_UPDATE), g_inst, nullptr);
 
         // Simple GitHub "link" as button for reliability without SysLink complexity
-        CreateWindowW(L"BUTTON", L"GitHub",
-            WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON,
+        HWND hBtnGithub = CreateWindowW(L"BUTTON", L"GitHub",
+            WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON | BS_OWNERDRAW,
             432, 5, 80, 24, hwnd, reinterpret_cast<HMENU>(IDC_LNK_GITHUB), g_inst, nullptr);
 
         HFONT font = reinterpret_cast<HFONT>(GetStockObject(DEFAULT_GUI_FONT));
@@ -443,6 +447,71 @@ LRESULT CALLBACK MainProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
             return 0;
         }
         break;
+    case WM_DRAWITEM: {
+        auto* dto = reinterpret_cast<LPDRAWITEMSTRUCT>(lParam);
+        if (!dto || dto->CtlType != ODT_BUTTON) break;
+
+        const HDC hdc = dto->hDC;
+        const RECT* rc = &dto->rcItem;
+        const bool focused = (GetFocus() == dto->hwndItem);
+        const bool disabled = (dto->itemState & ODS_DISABLED) != 0;
+        const bool pressed = (dto->itemState & ODS_SELECTED) != 0;
+        const bool hovered = (dto->itemState & ODS_FOCUS) != 0;
+
+        RECT btnRect = *rc;
+        // Inset for button padding
+        InflateRect(&btnRect, -2, -2);
+
+        // Background
+        if (disabled) {
+            FillRect(hdc, rc, GetSysColorBrush(COLOR_BTNFACE));
+        } else if (pressed) {
+            // Pressed: darker fill
+            COLORREF bg = RGB(230, 235, 240);
+            HBRUSH hBrush = CreateSolidBrush(RGB(GetRValue(bg), GetGValue(bg), GetBValue(bg)));
+            FillRect(hdc, rc, hBrush);
+            DeleteObject(hBrush);
+        } else {
+            // Normal: white or light gray
+            COLORREF bg = focused ? RGB(245, 248, 255) : RGB(248, 248, 248);
+            HBRUSH hBrush = CreateSolidBrush(RGB(GetRValue(bg), GetGValue(bg), GetBValue(bg)));
+            FillRect(hdc, rc, hBrush);
+            DeleteObject(hBrush);
+        }
+
+        // Border with rounded look (drawn as rectangle with slight inset)
+        if (focused) {
+            // Blue focus border
+            HPEN hPen = CreatePen(PS_SOLID, 1, RGB(0, 120, 215));
+            HPEN hOldPen = (HPEN)SelectObject(hdc, hPen);
+            Rectangle(hdc, rc->left, rc->top, rc->right, rc->bottom);
+            SelectObject(hdc, hOldPen);
+            DeleteObject(hPen);
+        } else {
+            // Subtle border
+            HPEN hPen = CreatePen(PS_SOLID, 1, RGB(199, 199, 199));
+            HPEN hOldPen = (HPEN)SelectObject(hdc, hPen);
+            Rectangle(hdc, rc->left, rc->top, rc->right, rc->bottom);
+            SelectObject(hdc, hOldPen);
+            DeleteObject(hPen);
+        }
+
+        // Text
+        wchar_t text[256]{};
+        GetWindowTextW(dto->hwndItem, text, 256);
+        if (!disabled && focused) {
+            SetBkMode(hdc, TRANSPARENT);
+            // Draw text with slight shadow for depth
+            SetTextColor(hdc, RGB(0, 0, 0));
+            DrawTextW(hdc, text, -1, &btnRect, DT_CENTER | DT_VCENTER | DT_SINGLELINE | DT_END_ELLIPSIS);
+        } else {
+            SetBkMode(hdc, TRANSPARENT);
+            SetTextColor(hdc, disabled ? GetSysColor(COLOR_GRAYTEXT) : RGB(33, 33, 33));
+            DrawTextW(hdc, text, -1, &btnRect, DT_CENTER | DT_VCENTER | DT_SINGLELINE | DT_END_ELLIPSIS);
+        }
+
+        return TRUE;
+    }
     case WM_DESTROY:
         UnregisterHotKey(hwnd, kHotkeyId);
         ClosePopup();
@@ -492,7 +561,7 @@ int APIENTRY wWinMain(HINSTANCE inst, HINSTANCE, LPWSTR, int) {
     g_mainWnd = CreateWindowExW(
         0, kMainClass, L"CtrlCV Notes",
         WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX,
-        CW_USEDEFAULT, CW_USEDEFAULT, 557, 275,
+        CW_USEDEFAULT, CW_USEDEFAULT, 557, 310,
         nullptr, nullptr, inst, nullptr);
     if (!g_mainWnd) return 1;
 
