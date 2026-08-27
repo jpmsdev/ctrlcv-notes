@@ -427,11 +427,14 @@ LRESULT CALLBACK MainProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
         return 0;
     }
     case WM_HOTKEY:
-        if (wParam == kHotkeyId) {
-            ShowWindow(hwnd, SW_SHOWNA);
-            ShowPopup();
-            return 0;
+if (wParam == kHotkeyId) {
+        // Minimize main window if not already minimized
+        if (!IsIconic(g_mainWnd)) {
+            ShowWindow(g_mainWnd, SW_MINIMIZE);
         }
+        ShowPopup();
+        return 0;
+}
         break;
     case WM_COMMAND:
         switch (LOWORD(wParam)) {
